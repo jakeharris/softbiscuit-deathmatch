@@ -45,13 +45,13 @@ function Scene(name, DEFAULT_ENTITIES, handleEvent) {
   this.move = function () {
     if(!this.entities) throw new EntityInitializationException(this.name + ': move() function didn\'t get an entity set.');
     this.entities.forEach(function (e, i, a) {
-      // e.move();
+      e.move()
     });
   };
   this.render = function () {
     if(!this.entities) return;
     this.entities.forEach(function (e, i, a) {
-      // e.render();
+      e.render()
     });
   };
   this.end = function () {
@@ -61,4 +61,4 @@ function Scene(name, DEFAULT_ENTITIES, handleEvent) {
     this.entities = cloneArray(DEFAULT_ENTITIES);
   };
 
-};
+}
