@@ -1,53 +1,3 @@
-/* =======
- * HELPERS
- * =======
-
-   Thanks to JCOC611 on stackoverflow for the robust dimension detection!
-   Thanks to Grumdrig on stackoverflow for the roundRect idea!
-
- */
-function cloneArray(arr) {
-   var tmp = new Array();
-   for(var a in arr) {
-     tmp[a] = new Object(arr[a]);
-   }
-   return tmp;
- }
-
-var vpwidth = function () {
-   return window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth||0
-}
-var vpheight = function () {
-   return window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight||0
-}
-
-var setGameDimensions = function(w, h) {
-
-   if(w >= 1920) w = 1920
-   else if(w >= 1600) w = 1600
-   else if(w >= 1366) w = 1366
-   else if(w >= 1024) w = 1024
-   else if(w >= 800)  w = 800
-   else if(w >= 640)  w = 640
-   else w = 320
-
-
-   if(h >= 1080) h = 1080
-   else if(h >= 900)  h = 900
-   else if(h >= 768)  h = 768
-   else if(h >= 640)  h = 640
-   else if(h >= 600)  h = 600
-   else if(h >= 480)  h = 480
-   else h = 320
-
-   return {
-     width: w,
-     height: h
-   }
-
-}
-
-
 /* ====
  * GAME
  * ====
@@ -74,7 +24,7 @@ var clear = function () {
     canvas.height = vpheight()
   }
 
-  ctx.fillStyle = '#777'
+  ctx.fillStyle = 'rgb(255, 240, 250)'
   ctx.textAlign = 'center'
   ctx.beginPath()
   ctx.rect(0, 0, canvas.width, canvas.height)
@@ -83,16 +33,15 @@ var clear = function () {
 }
 
 var render = function () {
-  if(!scenes || !scenes[0]) scenes = [ new StartScene({ }) ]
+  if(!scenes || !scenes[0]) scenes = [ new StartScene({ }), new DunkScene({ }) ]
   if(!scenes[currentScene]) {
     console.log("Current scene variable currentScene has exceeded legal bounds. (val: " + currentScene + ").")
-    //return false;
   }
   scenes[currentScene].render()
 }
 
 var logic = function () {
-  if(!scenes || !scenes[0]) scenes = [ new StartScene({ }) ]
+  if(!scenes || !scenes[0]) scenes = [ new StartScene({ }), new DunkScene({ }) ]
   if(!scenes[currentScene]) {
     console.log("Current scene variable currentScene has exceeded legal bounds. (val: " + currentScene + ").")
   }
@@ -117,7 +66,7 @@ var renderPause = function () {
     canvas.height = vpheight()
   }
 
-  ctx.fillStyle = '#777'
+  ctx.fillStyle = 'rgb(204, 204, 255)'
   ctx.beginPath()
   ctx.rect(0, 0, vpwidth(), vpheight())
   ctx.closePath()
