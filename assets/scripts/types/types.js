@@ -19,6 +19,10 @@
    RIGHT: 2,
    DOWN: 3
  }
+ var PlayerNumber = {
+   ONE: 0,
+   TWO: 1
+ }
 
 // # Classes
  function Menu (items, opts) {
@@ -141,17 +145,45 @@
    }
  }
 
+ function Player (opts) {
+   this.which = (opts.player) ? opts.player : PlayerNumber.ONE
+   this.x = (opts.x) ? opts.x : 0
+   this.y = (opts.y) ? opts.y : 0
+   this.input = function () {}
+
+   this.armSprite = new Image()
+   this.armSprite.src = 'assets/sprites/arm.png'
+   this.armWidth = 200
+   this.armLength = 300
+
+   this.thumbSprite = new Image()
+   this.thumbSprite.src = 'assets/sprites/thumb.png'
+   this.thumbWidth = 50
+   this.thumbLength = 100
+
+   this.cookie = new Cookie({ x: this.x, y: this.y + this.armLength - 80 })
+
+   this.render = function () {
+     ctx.beginPath()
+     ctx.drawImage(this.armSprite, this.x, this.y, this.armWidth, this.armLength)
+     this.cookie.render()
+     ctx.drawImage(this.thumbSprite, this.x + 2*this.thumbWidth, this.y + this.armLength - 90, this.thumbWidth, this.thumbLength)
+     ctx.closePath()
+   }
+ }
+
  function Cookie (opts) {
    this.type = (opts.type) ? opts.type : "Chessmen"
    this.health = (opts.health) ? opts.health : 10
    this.sprite = new Image();
-   this.sprite.src = 'assets/sprites/snake-body-vert-modern.png';
+   this.sprite.src = 'assets/sprites/biscuit-queen.png';
+   this.player = (opts.player) ? opts.player : Player.ONE;
 
    this.x = (opts.x) ? opts.x : 0
    this.y = (opts.y) ? opts.y : 0
 
-   this.width = (opts.width) ? opts.width : 1
-   this.height = (opts.height) ? opts.height : 2
+   this.width = (opts.width) ? opts.width : 2
+   this.height = (opts.height) ? opts.height : 3
 
    this.damage = function(damage) {
      health -= damage;
@@ -159,4 +191,39 @@
 
      }
    }
+   this.render = function () {
+     ctx.beginPath()
+     ctx.drawImage(this.sprite, this.x + 25, this.y, 100, 150)
+     ctx.closePath()
+   }
+ }
+
+ function TimerBar (opts) {
+   this.x = (opts.x) ? opts.x : 0
+   this.y = (opts.y) ? opts.y : 0
+   this.width = 100
+   this.height = 20
+   this.color = '#78cd53'
+   this.fillPercentage = 0
+
+   this.logic = function () {
+
+   }
+ }
+
+ function Sprite (opts) {
+   this.x = (opts.x) ? opts.x : 0
+   this.y = (opts.y) ? opts.y : 0
+   this.width = (opts.width) ? opts.width : 100
+   this.height = (opts.height) ? opts.height : 100
+
+   this.img = new Image()
+   this.img.src = opts.img
+
+   this.render = function () {
+     ctx.beginPath()
+     ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+     ctx.closePath()
+   }
+   this.move = function () {}
  }
