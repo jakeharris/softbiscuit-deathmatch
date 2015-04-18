@@ -6,7 +6,13 @@
    Thanks to Grumdrig on stackoverflow for the roundRect idea!
 
  */
-
+function cloneArray(arr) {
+   var tmp = new Array();
+   for(var a in arr) {
+     tmp[a] = new Object(arr[a]);
+   }
+   return tmp;
+ }
 
 var vpwidth = function () {
    return window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth||0
@@ -68,7 +74,7 @@ var clear = function () {
           canvas.height = vpheight()
         }
 
-        ctx.fillstyle = '#282828'
+        ctx.fillstyle = '#777'
         ctx.textAlign = 'center'
         ctx.beginPath()
         ctx.rect(0, 0, vpwidth(), vpheight())
@@ -78,19 +84,19 @@ var clear = function () {
 
 var render = function () {
         if(!scenes || !scenes[0]) scenes = [ new StartScene({ }) ]
-        if(!scenes[cur]) {
-          console.log("Current scene variable cur has exceeded legal bounds. (val: " + cur + ").")
+        if(!scenes[currentScene]) {
+          console.log("Current scene variable currentScene has exceeded legal bounds. (val: " + currentScene + ").")
           //return false;
         }
-        scenes[cur].render()
+        scenes[currentScene].render()
     };
 
 var logic = function () {
         if(!scenes || !scenes[0]) scenes = [ new StartScene({ }) ]
-        if(!scenes[cur]) {
-          console.log("Current scene variable cur has exceeded legal bounds. (val: " + cur + ").")
+        if(!scenes[currentScene]) {
+          console.log("Current scene variable currentScene has exceeded legal bounds. (val: " + currentScene + ").")
         }
-        scenes[cur].logic()
+        scenes[currentScene].logic()
     };
 
 var loop = function () {
@@ -111,7 +117,7 @@ var renderPause = function () {
           canvas.height = vpheight()
         }
 
-        ctx.fillstyle = '#282828'
+        ctx.fillstyle = '#777'
         ctx.beginPath()
         ctx.rect(0, 0, vpwidth(), vpheight())
         ctx.closePath()
