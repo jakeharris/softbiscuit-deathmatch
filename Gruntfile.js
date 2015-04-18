@@ -31,9 +31,9 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= config.dist %>/{,*/}*.html',
-          '<%= config.assets %>/styles/{,*/}*.css',
-          '<%= config.assets %>/scripts/{,*/}*.js'
+          './{,*/}*.html',
+          'assets/styles/{,*/}*.css',
+          'assets/scripts/{,*/}*.js'
         ]
       }
     },
@@ -61,7 +61,7 @@ module.exports = function (grunt) {
         asi: true,
         laxbreak: true
       },
-      all: ['<%= config.assets %>/scripts/{,*/}*.js']
+      all: ['assets/scripts/{,*/}*.js']
     }
   })
 
