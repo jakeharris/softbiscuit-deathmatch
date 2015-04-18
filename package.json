@@ -1,0 +1,28 @@
+{
+  "name": "softbiscuit-deathmatch",
+  "version": "1.0.0",
+  "description": "Submission for Ludum Dare 32. Extreme tea dueling.",
+  "main": "assets/scripts/sbdm.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/javakat/softbiscuit-deathmatch.git"
+  },
+  "author": "Jake Harris (github@javakat)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/javakat/softbiscuit-deathmatch/issues"
+  },
+  "homepage": "https://github.com/javakat/softbiscuit-deathmatch",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-connect": "^0.10.1",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "jit-grunt": "^0.9.1",
+    "jshint-stylish": "^1.0.1",
+    "time-grunt": "^1.1.1"
+  }
+}
