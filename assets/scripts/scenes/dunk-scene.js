@@ -2,7 +2,10 @@ function DunkScene() {
 
   var name = 'Dunk'
   var DEFAULT_ENTITIES = [
-      new Text({ type: 'Title', text: 'DUNKING SCENE' })
+      new Text({ type: 'Title', text: 'DUNKING SCENE' }),
+      new Player({ which: PlayerNumber.ONE, x: 100, y: 100 }),
+      new Player({ which: PlayerNumber.TWO, x: vpwidth() - 300, y: 100 }),
+      new TimerBar({ x: vpwidth() / 2 - 50, y: vpheight() * 3 / 4 })
   ]
   var handleEvent = function (e) {
     var d = scenes[Scenes.DUNK].entities[0].direction,
