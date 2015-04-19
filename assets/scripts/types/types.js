@@ -153,6 +153,8 @@
    this.x = this.initX
    this.y = this.initY
    this.cookieSpriteSrc = (opts.cookieSprite) ? opts.cookieSprite : 'assets/sprites/biscuit-queen.png'
+   this.cyclesUntilDirectionChange = 50;
+   this.cycles = 0;
    this.direction = Direction.LEFT
    this.input = function () {}
 
@@ -166,7 +168,7 @@
    this.thumbWidth = 50
    this.thumbLength = 100
 
-   this.cookie = new Cookie({ x: this.x, y: this.y + this.armLength - 80, sprite: this.cookieSprite })
+   this.cookie = new Cookie({ player: this.which, x: this.x, y: this.y + this.armLength - 80 })
    this.cookieSprite = new Image()
    this.cookieSprite.src = this.cookieSpriteSrc
    this.cookieWidth = 100
@@ -177,21 +179,37 @@
    this.cupWidth = 300
    this.cupHeight = 200
 
+   this.teaSprite = new Image()
+   this.teaSprite.src = 'assets/sprites/tea.png'
+   this.teaWidth = this.cupWidth
+   this.teaHeight = this.cupHeight
+
    this.render = function () {
      ctx.beginPath()
      ctx.drawImage(this.cupSprite, this.initX - 50, this.initY + this.armLength - this.cupHeight / 2, this.cupWidth, this.cupHeight)
      ctx.drawImage(this.thumbSprite, this.x + 2*this.thumbWidth, this.y + this.armLength - 90, this.thumbWidth, this.thumbLength)
      ctx.drawImage(this.cookieSprite, this.x + 25, this.y + this.armLength - 80, this.cookieWidth, this.cookieHeight)
+     ctx.globalAlpha = 0.5
+     ctx.drawImage(this.teaSprite, this.initX - 50, this.initY + this.armLength - this.cupHeight / 2, this.teaWidth, this.teaHeight)
+     ctx.globalAlpha = 1.0
      ctx.drawImage(this.armSprite, this.x, this.y, this.armWidth, this.armLength)
      ctx.closePath()
    }
 
    this.move = function () {
-     if(Math.random() >= 0.5) {
-       this.direction = Direction.NONE
+     if(this.cycles++ >= this.cyclesUntilDirectionChange) {
+       if(this.direction != Direction.NONE && Math.random() >= 0.5) {
+         this.direction = Direction.NONE
+       }
+       if(this.direction == Direction.NONE) {
+         this.direction = Math.floor(Math.random() * (4))
+       }
+       this.cycles = 0
      }
-     if(this.direction == Direction.NONE) {
-       this.direction = Math.floor(Math.random() * (5))
+     console.log(this.direction)
+     if(this.which == PlayerNumber.ONE) {
+       console.log(this.x)
+       console.log(this.y)
      }
 
      switch(this.direction) {
