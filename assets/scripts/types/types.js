@@ -189,10 +189,10 @@
      ctx.drawImage(this.cupSprite, this.initX - 50, this.initY + this.armLength - this.cupHeight / 2, this.cupWidth, this.cupHeight)
      ctx.drawImage(this.thumbSprite, this.x + 2*this.thumbWidth, this.y + this.armLength - 90, this.thumbWidth, this.thumbLength)
      ctx.drawImage(this.cookieSprite, this.x + 25, this.y + this.armLength - 80, this.cookieWidth, this.cookieHeight)
+     ctx.drawImage(this.armSprite, this.x, this.y, this.armWidth, this.armLength)
      ctx.globalAlpha = 0.5
      ctx.drawImage(this.teaSprite, this.initX - 50, this.initY + this.armLength - this.cupHeight / 2, this.teaWidth, this.teaHeight)
      ctx.globalAlpha = 1.0
-     ctx.drawImage(this.armSprite, this.x, this.y, this.armWidth, this.armLength)
      ctx.closePath()
    }
 
@@ -261,10 +261,38 @@
    this.width = 100
    this.height = 20
    this.color = '#78cd53'
-   this.fillPercentage = 0
+   this.timeToComplete = 5000 // in ms
+   this.timer = 0
+   this.previousTimeStamp = new Date()
 
-   this.render = function () {}
-   this.move = function () {}
+   this.percentageComplete = 0
+
+   this.render = function () {
+
+     ctx.beginPath()
+     ctx.fillStyle = '#282828'
+     ctx.fillRect(vpwidth() / 2 - this.width / 2, vpheight() - 3*this.height, this.width, this.height)
+     ctx.fillStyle = '#86cf85'
+     ctx.fillRect(vpwidth() / 2 - this.width / 2, vpheight() - 3*this.height, (this.width * this.percentageComplete) / 100, this.height)
+     ctx.closePath()
+
+   }
+   this.move = function () {
+     var timeStamp = new Date()
+     this.timer += timeStamp.getTime() - this.previousTimeStamp.getTime()
+     this.previousTimeStamp = timeStamp
+
+     if(this.timer > this.timeToComplete) {
+       this.timer = this.timeToComplete
+     }
+
+     this.percentageComplete = 100 * this.timer / this.timeToComplete
+   }
+   this.reset = function () {
+     this.timer = 0
+     this.previousTimeStamp = new Date()
+     this.percentageComplete = 0
+   }
  }
 
  function Sprite (opts) {

@@ -13,18 +13,53 @@ function DunkScene() {
         p2d = scenes[Scenes.DUNK].entities[3].direction,
         key = e.which
 
-    if      (key == '65')  scenes[Scenes.DUNK].entities[2].direction = Direction.LEFT
-    else if (key == '87')  scenes[Scenes.DUNK].entities[2].direction = Direction.UP
-    else if (key == '68')  scenes[Scenes.DUNK].entities[2].direction = Direction.RIGHT
-    else if (key == '83')  scenes[Scenes.DUNK].entities[2].direction = Direction.DOWN
+    if      (key == '65')  p1d = Direction.LEFT
+    else if (key == '87')  p1d = Direction.UP
+    else if (key == '68')  p1d = Direction.RIGHT
+    else if (key == '83')  p1d = Direction.DOWN
+
+    else if (key == '37') p2d = Direction.LEFT
+    else if (key == '38') p2d = Direction.UP
+    else if (key == '39') p2d = Direction.RIGHT
+    else if (key == '40') p2d = Direction.DOWN
+
     else if (key == '27' || key == '80') pause()
     else if (key == '81' && paused) {
       scenes[Scenes.DUNK].end()
       pause()
       currentScene = Scenes.START
     }
+
+    scenes[Scenes.DUNK].entities[2].direction = p1d
+    scenes[Scenes.DUNK].entities[3].direction = p2d
+
     inputs.push(p1d)
   }.bind(this)
 
   Scene.call(this, name, DEFAULT_ENTITIES, handleEvent)
+
+  this.init = function () {
+    console.log(name + ' scene is starting...');
+    document.addEventListener('keydown', this.handleEvent);
+    this.initialized = true;
+    DEFAULT_ENTITIES[4].reset();
+    return this.test();
+  };
+
+  this.logic = function () {
+    if(!this.initialized) this.init();
+    if(!this.entities) this.entities = cloneArray(DEFAULT_ENTITIES);
+
+    if(this.entities[4].percentageComplete >= 100) this.end();
+
+    return this.move();
+  };
+
+  this.end = function () {
+    this.initialized = false;
+    console.log(name + ' scene is ending...');
+    document.removeEventListener('keydown', this.handleEvent);
+    currentScene = Scenes.CONSUME
+    this.entities = cloneArray(DEFAULT_ENTITIES);
+  };
 }
