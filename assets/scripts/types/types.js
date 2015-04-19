@@ -17,7 +17,8 @@
    LEFT: 0,
    TOP: 1,
    RIGHT: 2,
-   DOWN: 3
+   DOWN: 3,
+   NONE: 4
  }
  var PlayerNumber = {
    ONE: 0,
@@ -147,8 +148,12 @@
 
  function Player (opts) {
    this.which = (opts.player) ? opts.player : PlayerNumber.ONE
-   this.x = (opts.x) ? opts.x : 0
-   this.y = (opts.y) ? opts.y : 0
+   this.initX = (opts.x) ? opts.x : 0
+   this.initY = (opts.y) ? opts.y : 0
+   this.x = this.initX
+   this.y = this.initY
+   this.cookieSpriteSrc = (opts.cookieSprite) ? opts.cookieSprite : 'assets/sprites/biscuit-queen.png'
+   this.direction = Direction.LEFT
    this.input = function () {}
 
    this.armSprite = new Image()
@@ -161,22 +166,56 @@
    this.thumbWidth = 50
    this.thumbLength = 100
 
-   this.cookie = new Cookie({ x: this.x, y: this.y + this.armLength - 80 })
+   this.cookie = new Cookie({ x: this.x, y: this.y + this.armLength - 80, sprite: this.cookieSprite })
+   this.cookieSprite = new Image()
+   this.cookieSprite.src = this.cookieSpriteSrc
+   this.cookieWidth = 100
+   this.cookieHeight = 150
+
+   this.cupSprite = new Image()
+   this.cupSprite.src ='assets/sprites/cup.png'
+   this.cupWidth = 300
+   this.cupHeight = 200
 
    this.render = function () {
      ctx.beginPath()
-     ctx.drawImage(this.armSprite, this.x, this.y, this.armWidth, this.armLength)
-     this.cookie.render()
+     ctx.drawImage(this.cupSprite, this.initX - 50, this.initY + this.armLength - this.cupHeight / 2, this.cupWidth, this.cupHeight)
      ctx.drawImage(this.thumbSprite, this.x + 2*this.thumbWidth, this.y + this.armLength - 90, this.thumbWidth, this.thumbLength)
+     ctx.drawImage(this.cookieSprite, this.x + 25, this.y + this.armLength - 80, this.cookieWidth, this.cookieHeight)
+     ctx.drawImage(this.armSprite, this.x, this.y, this.armWidth, this.armLength)
      ctx.closePath()
+   }
+
+   this.move = function () {
+     if(Math.random() >= 0.5) {
+       this.direction = Direction.NONE
+     }
+     if(this.direction == Direction.NONE) {
+       this.direction = Math.floor(Math.random() * (5))
+     }
+
+     switch(this.direction) {
+       case Direction.LEFT:
+         this.x -= 1
+         break
+       case Direction.UP:
+         this.y -= 1
+         break
+       case Direction.RIGHT:
+         this.x += 1
+         break
+       case Direction.DOWN:
+         this.y += 1
+         break
+       default:
+         break
+     }
    }
  }
 
  function Cookie (opts) {
    this.type = (opts.type) ? opts.type : "Chessmen"
    this.health = (opts.health) ? opts.health : 10
-   this.sprite = new Image();
-   this.sprite.src = 'assets/sprites/biscuit-queen.png';
    this.player = (opts.player) ? opts.player : Player.ONE;
 
    this.x = (opts.x) ? opts.x : 0
@@ -206,9 +245,8 @@
    this.color = '#78cd53'
    this.fillPercentage = 0
 
-   this.logic = function () {
-
-   }
+   this.render = function () {}
+   this.move = function () {}
  }
 
  function Sprite (opts) {
@@ -218,7 +256,7 @@
    this.height = (opts.height) ? opts.height : 100
 
    this.img = new Image()
-   this.img.src = opts.img
+   this.img.src = (opts.img) ? opts.img : 'assets/sprites/thumb.png'
 
    this.render = function () {
      ctx.beginPath()
