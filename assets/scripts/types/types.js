@@ -168,19 +168,21 @@
    this.thumbWidth = 50
    this.thumbLength = 100
 
-   this.cookie = new Cookie({ player: this.which, x: this.x, y: this.y + this.armLength - 80 })
+   this.cookie = new Cookie({ player: this.which })
+   this.cookieDamageTimer = 0
+   this.cookieDamageTimeLimit = 500
    this.cookieSprite = new Image()
    this.cookieSprite.src = this.cookieSpriteSrc
    this.cookieWidth = 100
    this.cookieHeight = 150
 
    this.cupSprite = new Image()
-   this.cupSprite.src ='assets/sprites/cup.png'
+   this.cupSprite.src ='assets/sprites/square-cup.png'
    this.cupWidth = 300
    this.cupHeight = 200
 
    this.teaSprite = new Image()
-   this.teaSprite.src = 'assets/sprites/tea.png'
+   this.teaSprite.src = 'assets/sprites/square-tea.png'
    this.teaWidth = this.cupWidth
    this.teaHeight = this.cupHeight
 
@@ -189,6 +191,21 @@
      ctx.drawImage(this.cupSprite, this.initX - 50, this.initY + this.armLength - this.cupHeight / 2, this.cupWidth, this.cupHeight)
      ctx.drawImage(this.thumbSprite, this.x + 2*this.thumbWidth, this.y + this.armLength - 90, this.thumbWidth, this.thumbLength)
      ctx.drawImage(this.cookieSprite, this.x + 25, this.y + this.armLength - 80, this.cookieWidth, this.cookieHeight)
+
+     if(this.cookie.hasBeenDamaged) {
+       ctx.fillStyle = 'white'
+       ctx.globalAlpha = 0.9
+       ctx.fillRect(this.x + 28, this.y + this.armLength - 70, this.cookieWidth - 6, this.cookieHeight - 22)
+       ctx.globalAlpha = 1
+
+       var timeStamp = new Date()
+       this.cookieDamageTimer += timeStamp.getTime() - this.cookie.damageTimeStamp.getTime()
+       if(this.cookieDamageTimer >= this.cookieDamageTimeLimit) {
+         this.cookie.hasBeenDamaged = false
+         this.cookieDamageTimer = 0
+       }
+     }
+
      ctx.drawImage(this.armSprite, this.x, this.y, this.armWidth, this.armLength)
      ctx.globalAlpha = 0.5
      ctx.drawImage(this.teaSprite, this.initX - 50, this.initY + this.armLength - this.cupHeight / 2, this.teaWidth, this.teaHeight)
@@ -205,11 +222,6 @@
          this.direction = Math.floor(Math.random() * (4))
        }
        this.cycles = 0
-     }
-     console.log(this.direction)
-     if(this.which == PlayerNumber.ONE) {
-       console.log(this.x)
-       console.log(this.y)
      }
 
      switch(this.direction) {
@@ -228,31 +240,50 @@
        default:
          break
      }
+
+     if(this.x <= this.initX - 50) {
+       this.x = this.initX - 50
+       this.direction = Direction.RIGHT
+       this.cookie.damage(1)
+     }
+     else if(this.y <= this.initY - 25) {
+       this.y = this.initY - 25
+       // ENFORCE PENALTY
+       this.direction = Direction.DOWN
+     }
+     else if(this.x >= this.initX + 50) {
+       this.x = this.initX + 50
+       this.direction = Direction.LEFT
+       this.cookie.damage(1)
+     }
+     else if(this.y >= this.initY + 25) {
+       this.y = this.initY + 25
+       this.direction = Direction.UP
+       this.cookie.damage(1)
+     }
    }
  }
 
  function Cookie (opts) {
    this.type = (opts.type) ? opts.type : "Chessmen"
    this.health = (opts.health) ? opts.health : 10
-   this.player = (opts.player) ? opts.player : Player.ONE;
-
-   this.x = (opts.x) ? opts.x : 0
-   this.y = (opts.y) ? opts.y : 0
+   this.player = (opts.player) ? opts.player : Player.ONE
 
    this.width = (opts.width) ? opts.width : 2
    this.height = (opts.height) ? opts.height : 3
 
+   this.hasBeenDamaged = false
+   this.damageTimeStamp = new Date()
+
    this.damage = function(damage) {
-     health -= damage;
-     if(health <= 0) {
+     this.health -= damage
+     if(this.health <= 0) {
 
      }
+     this.hasBeenDamaged = true
+     this.damageTimeStamp = new Date()
    }
-   this.render = function () {
-     ctx.beginPath()
-     ctx.drawImage(this.sprite, this.x + 25, this.y, 100, 150)
-     ctx.closePath()
-   }
+
  }
 
  function TimerBar (opts) {
