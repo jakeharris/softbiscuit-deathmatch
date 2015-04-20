@@ -83,7 +83,9 @@ function DunkScene() {
     console.log(name + ' scene is starting...')
     document.addEventListener('keydown', this.handleEvent)
     this.initialized = true
-    DEFAULT_ENTITIES[3].reset()
+    this.entities[1] = new Player({ player: PlayerNumber.ONE, x: 100, y: 100 })
+    this.entities[2] = new Player({ player: PlayerNumber.TWO, x: vpwidth() - 300, y: 100 })
+    this.entities[3].reset()
     return this.test()
   };
 
@@ -149,6 +151,5 @@ function DunkScene() {
     console.log(name + ' scene is ending...')
     document.removeEventListener('keydown', this.handleEvent)
     currentScene = Scenes.SCORE
-    this.entities = cloneArray(DEFAULT_ENTITIES)
   };
 }

@@ -7,10 +7,14 @@ function ScoreScene() {
       new Text({ type: 'MenuItem', text: 'Player N wins!', y: height/2 + 44*2 }),
       new Text({ type: 'MenuItem', text: 'Player 1: X mistakes', y: height/2 + 44*4}),
       new Text({ type: 'MenuItem', text: 'Player 2: Y mistakes', y: height/2 + 44*5}),
-      new Text({ type: 'MenuItem', text: '(Press Space to play again.)', y: height/2 + 44*8 })
+      new Text({ type: 'MenuItem', text: '(Press Space to play again.)', y: height/2 + 44*7 })
   ]
   var handleEvent = function (e) {
+    var key = e.which
 
+    if(key == '32') {
+      this.end()
+    }
 
   }.bind(this)
 
@@ -92,6 +96,14 @@ function ScoreScene() {
     if(!this.entities) return;
     this.entities.forEach(function (e, i, a) {
       e.render()
-    });
+    })
+  }
+
+  this.end = function () {
+    this.initialized = false
+    console.log(name + ' scene is ending...')
+    document.removeEventListener('keydown', this.handleEvent)
+    currentScene = Scenes.DUNK
+    this.entities = cloneArray(DEFAULT_ENTITIES)
   }
 }
