@@ -204,6 +204,11 @@
    this.teaWidth = this.cupWidth
    this.teaHeight = this.cupHeight
 
+   this.reverseSprite = new Image()
+   this.reverseSprite.src = 'assets/sprites/swirl.png'
+   this.reverseWidth = 80
+   this.reverseHeight = 50
+
    this.render = function () {
      ctx.beginPath()
      ctx.drawImage(this.cupSprite, this.initX - 50, this.initY + this.armLength - this.cupHeight / 2, this.cupWidth, this.cupHeight)
@@ -228,6 +233,7 @@
        ctx.fillStyle = 'green'
        ctx.globalAlpha = 0.5
        ctx.fillRect(this.x + 25, this.y + this.armLength - 80, this.cookieWidth, this.cookieHeight)
+       ctx.drawImage(this.reverseSprite, this.x + 35, this.y + this.armLength - 40, this.reverseWidth, this.reverseHeight)
        ctx.globalAlpha = 1
      }
 
@@ -270,21 +276,30 @@
        this.x = this.initX - 50
        this.direction = Direction.RIGHT
        this.cookie.damage(1)
+       if(this.cookie.health <= 7) {
+         this.cookieSprite.src = 'assets/sprites/biscuit-bishop-damaged.png'
+       }
      }
      else if(this.y <= this.initY - 25) {
        this.y = this.initY - 25
-       // ENFORCE PENALTY
+       this.cookie.damage(1) // consider other penalties
        this.direction = Direction.DOWN
      }
      else if(this.x >= this.initX + 50) {
        this.x = this.initX + 50
        this.direction = Direction.LEFT
        this.cookie.damage(1)
+       if(this.cookie.health <= 7) {
+         this.cookieSprite.src = 'assets/sprites/biscuit-bishop-damaged.png'
+       }
      }
      else if(this.y >= this.initY + 10) {
        this.y = this.initY + 10
        this.direction = Direction.UP
        this.cookie.damage(1)
+       if(this.cookie.health <= 7) {
+         this.cookieSprite.src = 'assets/sprites/biscuit-bishop-damaged.png'
+       }
      }
    }
 
@@ -301,7 +316,6 @@
         && this.lastUsedInsultTimeStamp !== -1
         && new Date().getTime() - this.lastUsedInsultTimeStamp.getTime() >= this.insultCooldown
       )
-
    }
  }
 
