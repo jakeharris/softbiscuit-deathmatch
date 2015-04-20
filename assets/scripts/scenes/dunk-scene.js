@@ -35,7 +35,6 @@ function DunkScene() {
               type: Hindrances.JITTERS
             }
           ))
-          console.log('Pushing a jitters hindrance onto player 2')
           this.entities[player1].hasUsedJitters = true
           this.entities[player2].isBeingJittered = true
         }
@@ -119,9 +118,6 @@ function DunkScene() {
       for(var ent in this.entities) {
         var en = this.entities[ent]
         if(en instanceof Hindrance && !en.alive) {
-          if(en.type == Hindrances.JITTERS ) {
-            console.log('Removing a jitters hindrance from ' + (en.player + 1))
-          }
           if (en.player == PlayerNumber.ONE) {
             if     (en.type == Hindrances.REVERSE) this.entities[1].isBeingReversed = false
             else if(en.type == Hindrances.JITTERS) this.entities[1].isBeingJittered = false

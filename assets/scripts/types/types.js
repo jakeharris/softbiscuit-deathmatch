@@ -419,7 +419,7 @@
    if(opts.text) {
      this.text = opts.text
    } else {
-     var whichText = Math.floor(Math.random() * (Insults.length - 1))
+     var whichText = Math.floor(Math.random() * (2)) // 2: number of insults in Insults
      switch(whichText) {
        case 0:
         this.text = Insults.MICROPHALLUS
@@ -442,6 +442,7 @@
 
      ctx.beginPath()
      ctx.font = '14pt Cascada'
+     ctx.fillStyle = 'black'
      ctx.fillText(this.text, x, vpheight() / 8)
      ctx.closePath()
    }
