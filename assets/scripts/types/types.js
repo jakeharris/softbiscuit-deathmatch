@@ -354,8 +354,8 @@
  function TimerBar (opts) {
    this.x = (opts.x) ? opts.x : 0
    this.y = (opts.y) ? opts.y : 0
-   this.width = 100
-   this.height = 20
+   this.width = 300
+   this.height = 30
    this.color = '#78cd53'
    this.timeToComplete = 10000 // in ms
    this.timer = 0
@@ -367,9 +367,9 @@
 
      ctx.beginPath()
      ctx.fillStyle = '#282828'
-     ctx.fillRect(vpwidth() / 2 - this.width / 2, vpheight() - 3*this.height, this.width, this.height)
+     ctx.fillRect(vpwidth() / 2 - this.width / 2, vpheight() - 2*this.height, this.width, this.height)
      ctx.fillStyle = '#86cf85'
-     ctx.fillRect(vpwidth() / 2 - this.width / 2, vpheight() - 3*this.height, (this.width * this.percentageComplete) / 100, this.height)
+     ctx.fillRect(vpwidth() / 2 - this.width / 2, vpheight() - 2*this.height, (this.width * this.percentageComplete) / 100, this.height)
      ctx.closePath()
 
    }
