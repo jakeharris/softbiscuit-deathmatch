@@ -33,7 +33,7 @@ var clear = function () {
 }
 
 var render = function () {
-  if(!scenes || !scenes[0]) scenes = [ new StartScene({ }), new DunkScene({ }) ]
+  if(!scenes || !scenes[0]) scenes = [ new StartScene({ }), new DunkScene({ }), new ScoreScene({ }) ]
   if(!scenes[currentScene]) {
     console.log("Current scene variable currentScene has exceeded legal bounds. (val: " + currentScene + ").")
   }
@@ -41,7 +41,7 @@ var render = function () {
 }
 
 var logic = function () {
-  if(!scenes || !scenes[0]) scenes = [ new StartScene({ }), new DunkScene({ }) ]
+  if(!scenes || !scenes[0]) scenes = [ new StartScene({ }), new DunkScene({ }), new ScoreScene({ }) ]
   if(!scenes[currentScene]) {
     console.log("Current scene variable currentScene has exceeded legal bounds. (val: " + currentScene + ").")
   }
