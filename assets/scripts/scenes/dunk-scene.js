@@ -17,17 +17,53 @@ function DunkScene() {
         else if (key == '87')  p1d = Direction.UP
         else if (key == '68')  p1d = Direction.RIGHT
         else if (key == '83')  p1d = Direction.DOWN
+        else if (key == '81' && !paused && this.entities[2].canInsult(Hindrances.REVERSE))
+          this.entities.push(new Hindrance(
+            {
+              player: PlayerNumber.TWO,
+              type: Hindrances.REVERSE
+            }
+          ))
 
         else if (key == '37') p2d = Direction.LEFT
         else if (key == '38') p2d = Direction.UP
         else if (key == '39') p2d = Direction.RIGHT
         else if (key == '40') p2d = Direction.DOWN
+        else if (key == '191' && this.entities[3].canInsult(Hindrances.REVERSE))
+          this.entities.push(new Hindrance(
+            {
+              player: PlayerNumber.ONE,
+              type: Hindrances.REVERSE
+            }
+          ))
 
         else if (key == '27' || key == '80') pause()
         else if (key == '81' && paused) {
           this.end()
           pause()
           currentScene = Scenes.START
+        }
+
+        // Handle Reversies
+        if(this.entities.length > 5) {
+          for(var ent in this.entities) {
+            var en = this.entities[ent]
+            if(en instanceof Hindrance && en.type == Hindrances.REVERSE) {
+              console.log('Reversing insult launched!')
+              if(en.player == PlayerNumber.ONE) {
+                if     (p1d == Direction.LEFT)  p1d = Direction.RIGHT
+                else if(p1d == Direction.UP)    p1d = Direction.DOWN
+                else if(p1d == Direction.RIGHT) p1d = Direction.LEFT
+                else if(p1d == Direction.DOWN)  p1d = Direction.UP
+              }
+              else if (en.player == PlayerNumber.TWO) {
+                if     (p2d == Direction.LEFT)  p2d = Direction.RIGHT
+                else if(p2d == Direction.UP)    p2d = Direction.DOWN
+                else if(p2d == Direction.RIGHT) p2d = Direction.LEFT
+                else if(p2d == Direction.DOWN)  p2d = Direction.UP
+              }
+            }
+          }
         }
 
         this.entities[2].direction = p1d

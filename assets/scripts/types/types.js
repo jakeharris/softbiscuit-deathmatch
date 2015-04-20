@@ -160,13 +160,18 @@
    this.which = (opts.player) ? opts.player : PlayerNumber.ONE
    this.initX = (opts.x) ? opts.x : 0
    this.initY = (opts.y) ? opts.y : 0
+   this.cookieSpriteSrc = (opts.cookieSprite) ? opts.cookieSprite : 'assets/sprites/biscuit-queen.png'
    this.x = this.initX
    this.y = this.initY
-   this.cookieSpriteSrc = (opts.cookieSprite) ? opts.cookieSprite : 'assets/sprites/biscuit-queen.png'
-   this.cyclesUntilDirectionChange = 50;
-   this.cycles = 0;
+
+   this.cyclesUntilDirectionChange = 50
+   this.cycles = 0
    this.direction = Direction.LEFT
-   this.input = function () {}
+
+   this.hasUsedReverse = false
+   this.hasUsedJitters = false
+   this.lastUsedInsultTimeStamp = -1
+   this.insultCooldown = 5000
 
    this.armSprite = new Image()
    this.armSprite.src = 'assets/sprites/arm.png'
@@ -272,6 +277,22 @@
        this.cookie.damage(1)
      }
    }
+
+   this.canInsult = function (hindrance) {
+     return (
+        (
+           hindrance == Hindrances.REVERSE
+        && !this.hasUsedReverse
+        ) ||
+        (
+          hindrance == Hindrances.JITTERS
+          && !this.hasUsedJitters
+        )
+        && this.lastUsedInsultTimeStamp !== -1
+        && new Date().getTime() - this.lastUsedInsultTimeStamp.getTime() >= this.insultCooldown
+      )
+
+   }
  }
 
  function Cookie (opts) {
@@ -361,7 +382,10 @@
 
    if(opts.text) {
      this.text = opts.text
-   } else this.text = Insults[Math.floor(Math.random() * Insults.length())]
+   } else this.text = Insults[Math.floor(Math.random() * Insults.length)]
 
-   
+   this.render = function () {
+     
+   }
+   this.move = function () {}
  }
