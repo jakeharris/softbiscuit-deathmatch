@@ -28,6 +28,17 @@ function DunkScene() {
           this.entities[player1].hasUsedReverse = true
           this.entities[player2].isBeingReversed = true
         }
+        else if(key == '69' && this.entities[player1].canInsult(Hindrances.JITTERS)) {
+          this.entities.push(new Hindrance(
+            {
+              player: PlayerNumber.TWO,
+              type: Hindrances.JITTERS
+            }
+          ))
+          console.log('Pushing a jitters hindrance onto player 2')
+          this.entities[player1].hasUsedJitters = true
+          this.entities[player2].isBeingJittered = true
+        }
         else if (key == '37') p2d = Direction.LEFT
         else if (key == '38') p2d = Direction.UP
         else if (key == '39') p2d = Direction.RIGHT
@@ -42,6 +53,16 @@ function DunkScene() {
           this.entities[player2].hasUsedReverse = true
           this.entities[player1].isBeingReversed = true
         }
+        else if (key == '191' && this.entities[player2].canInsult(Hindrances.JITTERS)) {
+          this.entities.push(new Hindrance(
+            {
+              player: PlayerNumber.ONE,
+              type: Hindrances.JITTERS
+            }
+          ))
+          this.entities[player2].hasUsedJitters = true
+          this.entities[player1].isBeingJittered = true
+        }
         else if (key == '27' || key == '80') pause()
         else if (key == '81' && paused) {
           this.end()
@@ -54,7 +75,6 @@ function DunkScene() {
           for(var ent in this.entities) {
             var en = this.entities[ent]
             if(en instanceof Hindrance && en.type == Hindrances.REVERSE) {
-              console.log('Reversing insult launched!')
               if(en.player == PlayerNumber.ONE) {
                 if     (p1d == Direction.LEFT)  p1d = Direction.RIGHT
                 else if(p1d == Direction.UP)    p1d = Direction.DOWN
@@ -99,6 +119,9 @@ function DunkScene() {
       for(var ent in this.entities) {
         var en = this.entities[ent]
         if(en instanceof Hindrance && !en.alive) {
+          if(en.type == Hindrances.JITTERS ) {
+            console.log('Removing a jitters hindrance from ' + (en.player + 1))
+          }
           if (en.player == PlayerNumber.ONE) {
             if     (en.type == Hindrances.REVERSE) this.entities[1].isBeingReversed = false
             else if(en.type == Hindrances.JITTERS) this.entities[1].isBeingJittered = false

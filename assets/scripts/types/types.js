@@ -143,7 +143,6 @@
    }
 
    this.move = function () {
-     // hover effect -- think Hotline Miami
      return;
    }
 
@@ -170,7 +169,8 @@
 
    this.hasUsedReverse = false
    this.hasUsedJitters = false
-   this.lastUsedInsultTimeStamp = -1
+   this.lastUsedInsultTimeStamp = new Date()
+   this.lastUsedInsultTimeStamp.setTime(new Date().getTime() + this.insultCooldown)
    this.insultCooldown = 5000
 
    this.isBeingReversed = false
@@ -236,6 +236,13 @@
        ctx.drawImage(this.reverseSprite, this.x + 35, this.y + this.armLength - 40, this.reverseWidth, this.reverseHeight)
        ctx.globalAlpha = 1
      }
+     if(this.isBeingJittered) {
+       ctx.fillStyle = 'yellow'
+       ctx.globalAlpha = 0.85
+       ctx.fillRect(this.x + 25, this.y + this.armLength - 80, this.cookieWidth, this.cookieHeight)
+       ctx.drawImage(this.reverseSprite, this.x + 35, this.y + this.armLength - 40, this.reverseWidth, this.reverseHeight)
+       ctx.globalAlpha = 1
+     }
 
      ctx.drawImage(this.armSprite, this.x, this.y, this.armWidth, this.armLength)
      ctx.globalAlpha = 0.5
@@ -245,7 +252,8 @@
    }
 
    this.move = function () {
-     if(this.cycles++ >= this.cyclesUntilDirectionChange) {
+     if(this.cycles++ >= this.cyclesUntilDirectionChange
+     || this.isBeingJittered) {
        if(this.direction != Direction.NONE && Math.random() >= 0.5) {
          this.direction = Direction.NONE
        }
@@ -304,6 +312,7 @@
    }
 
    this.canInsult = function (hindrance) {
+
      return (
         (
            hindrance == Hindrances.REVERSE
@@ -313,8 +322,6 @@
           hindrance == Hindrances.JITTERS
           && !this.hasUsedJitters
         )
-        && this.lastUsedInsultTimeStamp !== -1
-        && new Date().getTime() - this.lastUsedInsultTimeStamp.getTime() >= this.insultCooldown
       )
    }
  }
