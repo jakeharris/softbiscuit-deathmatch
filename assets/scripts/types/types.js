@@ -32,7 +32,7 @@
    MISTAKE: 'What a decrepit, lamentable mistake thou art!',
    GREASE: 'To arms, you narcissistic, heart-sickening glob of grease!',
    DELINQUENT: 'You are an ineffably subliterate delinquent.',
-   MOLESTER: 'You\'re nothign but a chromosome deficient molester of small furry animals!'
+   MOLESTER: 'You\'re nothing but a chromosome deficient molester of small furry animals!'
  }
 
  var Hindrances = {
