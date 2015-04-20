@@ -10,8 +10,8 @@
  var Scenes = {
    START: 0,
    DUNK: 1,
-   CONSUME: 2,
-   SCORE: 3
+   // CONSUME: 2,
+   SCORE: 2
  }
  var Direction = {
    LEFT: 0,

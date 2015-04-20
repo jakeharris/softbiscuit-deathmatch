@@ -50,7 +50,7 @@ function DunkScene() {
         }
 
         // Handle Reversies
-        if(this.entities.length > 5) {
+        if(this.entities.length > 4) {
           for(var ent in this.entities) {
             var en = this.entities[ent]
             if(en instanceof Hindrance && en.type == Hindrances.REVERSE) {
@@ -148,7 +148,7 @@ function DunkScene() {
     this.initialized = false
     console.log(name + ' scene is ending...')
     document.removeEventListener('keydown', this.handleEvent)
-    currentScene = Scenes.CONSUME
+    currentScene = Scenes.SCORE
     this.entities = cloneArray(DEFAULT_ENTITIES)
   };
 }
