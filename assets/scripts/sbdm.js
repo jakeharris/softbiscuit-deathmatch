@@ -66,22 +66,16 @@ var renderPause = function () {
     canvas.height = vpheight()
   }
 
-  ctx.fillStyle = 'rgb(204, 204, 255)'
+  ctx.fillStyle = 'rgba(204, 204, 255, 0.8)'
   ctx.beginPath()
   ctx.rect(0, 0, vpwidth(), vpheight())
   ctx.closePath()
   ctx.fill()
 
-  ctx.fillStyle = "rgba(0, 0, 0, .5)"
-  ctx.beginPath()
-  ctx.rect(0, 0, width, height)
-  ctx.closePath()
-  ctx.fill()
-
   ctx.fillStyle = "#fff"
   ctx.beginPath()
-  ctx.fillText('Press P or ESC to continue playing.', width*3/8, height/2) //FIXME
-  ctx.fillText('Press Q to quit.', width*3/8, height/2 + 64)
+  ctx.fillText('Press P or ESC to continue playing.', vpwidth() / 2, height/2) //FIXME
+  ctx.fillText('Press Q to quit.', vpwidth() / 2, height/2 + 44)
   ctx.closePath()
 }
 
