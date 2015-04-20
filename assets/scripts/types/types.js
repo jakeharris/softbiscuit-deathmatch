@@ -226,8 +226,8 @@
 
      if(this.isBeingReversed) {
        ctx.fillStyle = 'green'
-       ctx.globalAlpha = 0.8
-       ctx.fillRect(this.x + 28, this.y + this.armLength - 70, this.cookieWidth - 6, this.cookieHeight - 22)
+       ctx.globalAlpha = 0.5
+       ctx.fillRect(this.x + 25, this.y + this.armLength - 80, this.cookieWidth, this.cookieHeight)
        ctx.globalAlpha = 1
      }
 
