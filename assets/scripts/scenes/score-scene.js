@@ -4,10 +4,10 @@ function ScoreScene() {
   var DEFAULT_ENTITIES = [
       new Sprite({ x: 30, y: 30, img: 'assets/sprites/victor.png', width: 412, height: 600 }),
       new Sprite({ x: 5 * vpwidth() / 8, y: 30, img: 'assets/sprites/player2-loser.png',  width: 412, height: 600 }),
-      new Text({ type: 'MenuItem', text: 'Player N wins!', y: height/2 - 44*2 }),
-      new Text({ type: 'MenuItem', text: 'Player 1: X mistakes', y: height/2}),
-      new Text({ type: 'MenuItem', text: 'Player 2: Y mistakes', y: height/2 + 44}),
-      new Text({ type: 'MenuItem', text: '(Press Space to play again.)', y: height/2 + 44*3 })
+      new Text({ type: 'MenuItem', text: 'Player N wins!', y: vpheight()/2 - 44*2 }),
+      new Text({ type: 'MenuItem', text: 'Player 1: X mistakes', y: vpheight()/2}),
+      new Text({ type: 'MenuItem', text: 'Player 2: Y mistakes', y: vpheight()/2 + 44}),
+      new Text({ type: 'MenuItem', text: '(Press Space to play again.)', y: vpheight()/2 + 44*3 })
   ]
   var handleEvent = function (e) {
     var key = e.which
