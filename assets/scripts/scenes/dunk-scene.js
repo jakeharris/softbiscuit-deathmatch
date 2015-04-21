@@ -2,10 +2,10 @@ function DunkScene() {
 
   var name = 'Dunk',
       DEFAULT_ENTITIES = [
-        new Sprite   ({ img: 'assets/sprites/table.png', x: 25, y: vpheight() - 200, width: vpwidth() - 50, height: 100}),
-        new Player   ({ player: PlayerNumber.ONE, x: 100, y: 100 }),
-        new Player   ({ player: PlayerNumber.TWO, x: vpwidth() - 300, y: 100 }),
-        new TimerBar ({ x: vpwidth() / 2 - 50, y: vpheight() * 3 / 4 })
+        new Sprite   ({ img: 'assets/sprites/table.png', x: 25, y: vpheight() - (3.5/10) * vpheight(), width: vpwidth() - 50, height: (2/10) * vpheight() }),
+        new Player   ({ player: PlayerNumber.ONE, x: vpwidth() * 1/10, y: vpheight() * 1/10 }),
+        new Player   ({ player: PlayerNumber.TWO, x: vpwidth(), y: vpheight() * 1/10 }),
+        new TimerBar ({ })
       ],
       handleEvent = function (e) {
         var player1 = 1,
