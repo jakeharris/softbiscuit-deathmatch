@@ -52,7 +52,7 @@ function DunkScene() {
           this.entities[player2].hasUsedReverse = true
           this.entities[player1].isBeingReversed = true
         }
-        else if (key == '191' && this.entities[player2].canInsult(Hindrances.JITTERS)) {
+        else if (key == '16' && this.entities[player2].canInsult(Hindrances.JITTERS)) {
           this.entities.push(new Hindrance(
             {
               player: PlayerNumber.ONE,
